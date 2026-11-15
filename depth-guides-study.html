@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Depth Guides: case study | Mmesoma Ugwuanyi</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@500;800;900&family=DM+Sans:wght@400;500;700&family=Unbounded:wght@500;800&display=swap" rel="stylesheet">
+
+<!-- ======================================================================
+     UPDATE THE STUDY HERE. Everything on the page (numbers, charts,
+     participant count, hypothesis status) is built from this block.
+
+     To add a new participant: copy one { ... } line inside "participants",
+     paste it at the end, and fill in the numbers from the AVERAGE ERROR
+     lines at the top of their results screenshot.
+     Use P4, P5... never real names.
+     ====================================================================== -->
+<script>
+const STUDY = {
+  lastUpdated: "15 November 2026",
+  playLink: "https://mmeso-iconic.github.io/depth-guides/",
+  codeLink: "https://github.com/Mmeso-iconic/depth-guides",
+  protocolLink: "https://github.com/Mmeso-iconic/depth-guides/blob/main/docs/study-protocol.md",
+  youtubeId: "YOUTUBE_VIDEO_ID",   // the part after watch?v= in your YouTube link
+
+  participants: [
+    { id: "P1", experience: "no",  device: "Android phone", first: "OFF", easier: "same",
+      off: { depth: 0.06, side: 0.07, height: 0.05, time: 34.3 }, on: { depth: 0.04, side: 0.04, height: 0.03, time: 20.1 } },
+    { id: "P2", experience: "yes", device: "iPhone", first: "OFF", easier: "same",
+      off: { depth: 3.56, side: 0.99, height: 0.56, time: 10.3 }, on: { depth: 0.13, side: 0.11, height: 0.37, time: 22.1 } },
+    { id: "P3", experience: "yes", device: "iPhone", first: "OFF", easier: "same",
+      off: { depth: 2.37, side: 0.41, height: 0.52, time: 13.9 }, on: { depth: 0.06, side: 0.04, height: 0.31, time: 22.3 } },
+  ],
+
+  // What participants said (from voice notes). Leave the list empty to hide this section.
+  quotes: [
+    // { id: "P2", text: "Type what they said here" },
+  ],
+
+  // Update the status of each hypothesis as data comes in
+  hypotheses: [
+    { code: "H1", text: "Depth (near/far) is harder to judge than side or height.", status: "Supported so far",
+      note: "Without guides, the two experienced players' depth errors were 3 to 6 times larger than their side or height errors." },
+    { code: "H2", text: "Guides reduce depth error.", status: "Supported so far",
+      note: "Depth error dropped for all three participants with guides on." },
+    { code: "H3", text: "Guides help people without 3D experience more.", status: "Too early to tell",
+      note: "Only one participant without 3D experience so far, and they were already precise without guides. More first-timers needed." },
+    { code: "H4", text: "Further targets are harder.", status: "Early signs",
+      note: "Without guides, depth error tended to grow with target distance for the two experienced players." },
+  ],
+};
+</script>
+
+<style>
+  :root {
+    --orange: #FF6B1A; --orange-2: #FF9A5C; --peach: #FFE9DB; --cream: #FFF8F2;
+    --ink: #17171A; --deep: #121214; --muted: #5F5F68; --line: #EDE6E0; --grey: #A3A3AD;
+    --display: "Unbounded", sans-serif; --poster: "Big Shoulders Display", sans-serif;
+    --body: "DM Sans", -apple-system, "Segoe UI", sans-serif;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; overflow-x: hidden; }
+  body { font-family: var(--body); background: #fff; color: var(--ink); line-height: 1.65; overflow-x: hidden; }
+  a { color: inherit; }
+  .wrap { max-width: 1040px; margin: 0 auto; padding: 0 24px; }
+  .narrow { max-width: 720px; }
+
+  nav { position: fixed; inset: 0 0 auto 0; z-index: 50; background: rgba(255,255,255,.92); backdrop-filter: blur(12px); border-bottom: 1px solid var(--line); }
+  nav .wrap { display: flex; align-items: center; justify-content: space-between; height: 64px; }
+  .back { font-family: var(--poster); font-weight: 800; letter-spacing: .06em; text-transform: uppercase; text-decoration: none; color: var(--muted); }
+  .back:hover { color: var(--orange); }
+  .logo { font-family: var(--display); font-weight: 800; text-decoration: none; }
+  .logo span { color: var(--orange); }
+
+  .btn { display: inline-flex; align-items: center; gap: 8px; text-decoration: none; font-weight: 700; font-size: .95rem; padding: 12px 22px; border-radius: 999px; background: var(--orange); color: #fff; border: 2px solid var(--orange); transition: transform .2s, box-shadow .2s; }
+  .btn:hover { transform: translateY(-3px); box-shadow: 0 12px 28px rgba(255,107,26,.35); }
+  .btn.ghost { background: transparent; color: var(--orange); }
+  .btn.light { background: #fff; color: var(--orange); border-color: #fff; }
+  .btn.light.ghost { background: transparent; color: #fff; }
+
+  /* HERO */
+  .hero { padding: 130px 0 60px; background: var(--cream); position: relative; overflow: hidden; }
+  .hero .ghostword { position: absolute; right: -2vw; bottom: -3vw; font-family: var(--poster); font-weight: 900; font-size: 20vw; line-height: .8; color: transparent; -webkit-text-stroke: 2px rgba(255,107,26,.12); pointer-events: none; }
+  .eyebrow { font-family: var(--poster); font-weight: 800; letter-spacing: .14em; text-transform: uppercase; color: var(--orange); }
+  h1 { font-family: var(--poster); font-weight: 900; font-size: clamp(3.5rem, 11vw, 8rem); line-height: .85; text-transform: uppercase; margin: 10px 0 16px; }
+  h1 .outline { color: transparent; -webkit-text-stroke: 2px var(--ink); }
+  .sub { font-family: var(--display); font-weight: 500; font-size: clamp(1.1rem, 2.4vw, 1.5rem); letter-spacing: -.02em; max-width: 760px; }
+  .meta { display: grid; grid-template-columns: repeat(4, 1fr); gap: 18px; margin-top: 40px; padding-top: 26px; border-top: 1px solid var(--line); }
+  @media (max-width: 760px) { .meta { grid-template-columns: repeat(2, 1fr); } }
+  .meta b { display: block; font-family: var(--poster); font-weight: 800; letter-spacing: .1em; text-transform: uppercase; color: var(--orange); font-size: .95rem; }
+  .meta span { color: var(--muted); font-size: .95rem; }
+  .live { display: inline-flex; align-items: center; gap: 8px; }
+  .live::before { content: ""; width: 9px; height: 9px; border-radius: 50%; background: #22c55e; box-shadow: 0 0 0 0 rgba(34,197,94,.6); animation: ping 2s infinite; }
+  @keyframes ping { 70% { box-shadow: 0 0 0 10px rgba(34,197,94,0); } }
+  .hero-actions { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 30px; }
+
+  /* SECTIONS */
+  section { padding: 90px 0; }
+  .sec-head { display: flex; align-items: baseline; gap: 16px; margin-bottom: 18px; }
+  .num { font-family: var(--poster); font-weight: 900; font-size: 1.3rem; color: var(--orange); }
+  h2 { font-family: var(--poster); font-weight: 900; font-size: clamp(2.4rem, 6vw, 4.2rem); line-height: .92; text-transform: uppercase; }
+  h3 { font-family: var(--display); font-weight: 800; font-size: 1.05rem; letter-spacing: -.02em; text-transform: uppercase; margin-bottom: 6px; }
+  p { margin-bottom: 14px; color: #3E3E46; font-size: 1.05rem; }
+  .muted { color: var(--muted); }
+  .cream { background: var(--cream); }
+  .dark { background: var(--deep); color: #fff; }
+  .dark p, .dark .muted { color: #C4C4CC; }
+  .dark h2 { color: #fff; }
+
+  /* VIDEO */
+  .video { position: relative; aspect-ratio: 16 / 9; border-radius: 24px; overflow: hidden; background: #1C1C20; box-shadow: 0 30px 60px rgba(0,0,0,.25); }
+  .video iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
+  .video .soon { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; color: #8A8A94; font-family: var(--poster); font-weight: 800; font-size: 1.6rem; letter-spacing: .08em; text-transform: uppercase; }
+
+  /* INSIGHT */
+  .insight { display: grid; grid-template-columns: 1fr 1.4fr; gap: 30px; align-items: center; background: linear-gradient(135deg, var(--orange), var(--orange-2)); color: #fff; border-radius: 30px; padding: 44px; }
+  @media (max-width: 760px) { .insight { grid-template-columns: 1fr; padding: 30px; } }
+  .big { font-family: var(--display); font-weight: 800; font-size: clamp(3.2rem, 9vw, 5.5rem); letter-spacing: -.05em; line-height: 1; }
+  .insight p { color: #fff; font-size: 1.15rem; margin: 0; }
+  .insight .label { font-family: var(--poster); font-weight: 800; letter-spacing: .12em; text-transform: uppercase; opacity: .9; margin-top: 6px; }
+
+  /* CARDS */
+  .grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+  .grid3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
+  @media (max-width: 860px) { .grid2, .grid3 { grid-template-columns: 1fr; } }
+  .card { background: #fff; border: 1px solid var(--line); border-radius: 22px; padding: 24px; transition: transform .25s, box-shadow .25s; }
+  .card:hover { transform: translateY(-4px); box-shadow: 0 16px 36px rgba(255,107,26,.12); }
+  .card p { font-size: .97rem; margin: 0; }
+  .card .why { margin-top: 10px; padding-top: 10px; border-top: 1px dashed var(--line); font-size: .92rem; color: var(--muted); }
+  .card .why b { color: var(--orange); }
+  .dark .card { background: #1C1C20; border-color: #2A2A30; }
+  .dark .card p { color: #C4C4CC; }
+
+  .hyp { display: grid; grid-template-columns: 70px 1fr auto; gap: 16px; align-items: start; padding: 20px 0; border-bottom: 1px solid var(--line); }
+  @media (max-width: 640px) { .hyp { grid-template-columns: 54px 1fr; } .hyp .chip { grid-column: 2; justify-self: start; } }
+  .hyp .code { font-family: var(--poster); font-weight: 900; font-size: 2rem; color: var(--orange); line-height: 1; }
+  .hyp p { margin: 0; }
+  .hyp .note { font-size: .92rem; color: var(--muted); margin-top: 4px; }
+  .chip { font-weight: 700; font-size: .78rem; text-transform: uppercase; letter-spacing: .04em; padding: 5px 12px; border-radius: 999px; white-space: nowrap; }
+  .chip.yes { background: #DCFCE7; color: #166534; } .chip.early { background: var(--peach); color: #B4470A; } .chip.wait { background: #EEEEF2; color: #55555E; }
+
+  /* TIMELINE */
+  .iter { display: grid; grid-template-columns: 90px 1fr; gap: 20px; padding: 18px 0; border-bottom: 1px solid #2A2A30; }
+  .iter .v { font-family: var(--poster); font-weight: 900; font-size: 2.2rem; color: var(--orange); line-height: 1; }
+
+  /* CHARTS */
+  .chart-card { background: #fff; border: 1px solid var(--line); border-radius: 22px; padding: 22px; }
+  .chart-card h3 { margin-bottom: 2px; }
+  .chart-card .cap { font-size: .9rem; color: var(--muted); margin-bottom: 10px; }
+  svg text { font-family: var(--body); }
+  .legend { display: flex; gap: 16px; font-size: .85rem; color: var(--muted); margin-top: 6px; flex-wrap: wrap; }
+  .legend i { display: inline-block; width: 12px; height: 12px; border-radius: 3px; margin-right: 6px; vertical-align: -1px; }
+
+  .finding { display: grid; grid-template-columns: 60px 1fr; gap: 18px; padding: 22px 0; border-bottom: 1px solid var(--line); }
+  .finding .n { font-family: var(--poster); font-weight: 900; font-size: 2.6rem; color: transparent; -webkit-text-stroke: 2px var(--orange); line-height: 1; }
+  .finding p { margin: 0; }
+
+  .stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; margin-bottom: 26px; }
+  @media (max-width: 760px) { .stats { grid-template-columns: repeat(2, 1fr); } }
+  .stat { background: var(--cream); border-radius: 18px; padding: 18px; }
+  .stat .v { font-family: var(--display); font-weight: 800; font-size: 1.8rem; color: var(--orange); letter-spacing: -.03em; }
+  .stat .l { font-size: .85rem; color: var(--muted); }
+
+  blockquote { background: var(--cream); border-left: 4px solid var(--orange); border-radius: 0 16px 16px 0; padding: 18px 22px; font-size: 1.05rem; }
+  blockquote cite { display: block; margin-top: 6px; font-style: normal; font-weight: 700; color: var(--orange); font-size: .85rem; }
+
+  ul.clean { list-style: none; }
+  ul.clean li { padding: 10px 0 10px 28px; position: relative; color: #3E3E46; border-bottom: 1px solid var(--line); }
+  ul.clean li::before { content: "✦"; position: absolute; left: 0; color: var(--orange); }
+
+  .join { text-align: center; background: linear-gradient(135deg, var(--orange), var(--orange-2)); color: #fff; border-radius: 34px; padding: 70px 26px; position: relative; overflow: hidden; }
+  .join h2 { color: #fff; }
+  .join p { color: #fff; max-width: 600px; margin: 14px auto 26px; }
+  .steps { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; margin: 0 0 30px; }
+  .steps span { background: rgba(255,255,255,.18); border-radius: 999px; padding: 8px 16px; font-weight: 700; font-size: .92rem; }
+  footer { text-align: center; color: var(--muted); font-size: .85rem; padding: 34px 0 44px; }
+
+  .reveal { opacity: 0; transform: translateY(30px); transition: opacity .8s ease, transform .8s ease; }
+  .reveal.show { opacity: 1; transform: none; }
+  @media (prefers-reduced-motion: reduce) { *, *::before { animation: none !important; transition: none !important; } .reveal { opacity: 1; transform: none; } }
+</style>
+</head>
+<body>
+
+<nav><div class="wrap">
+  <a class="back" href="index.html#projects">← Portfolio</a>
+  <a class="logo" href="index.html">MMESOMA<span>.</span></a>
+</div></nav>
+
+<!-- ================= HERO ================= -->
+<header class="hero">
+  <div class="ghostword">DEPTH</div>
+  <div class="wrap" style="position:relative">
+    <div class="eyebrow">Case study · XR interaction research</div>
+    <h1>Depth <span class="outline">Guides</span></h1>
+    <p class="sub">Can one simple visual cue help people judge depth in 3D, especially people meeting 3D for the first time?</p>
+    <div class="meta">
+      <div><b>Role</b><span>Solo: research, design, development</span></div>
+      <div><b>Timeline</b><span>November 2026, ongoing</span></div>
+      <div><b>Tools</b><span>Unity 6, C#, WebGL, Python, GitHub Pages</span></div>
+      <div><b>Status</b><span class="live"><span id="nCount">0</span>&nbsp;participants · live pilot</span></div>
+    </div>
+    <div class="hero-actions">
+      <a class="btn" id="playBtn" href="#">▶ Take part (5 min)</a>
+      <a class="btn ghost" id="codeBtn" href="#">Code &amp; data</a>
+      <a class="btn ghost" id="protoBtn" href="#">Study protocol</a>
+    </div>
+  </div>
+</header>
+
+<!-- ================= VIDEO + INSIGHT ================= -->
+<section>
+  <div class="wrap">
+    <div class="video reveal" id="video"><div class="soon">Video coming soon</div></div>
+
+    <div class="insight reveal" style="margin-top:40px">
+      <div>
+        <div class="big" id="bigStat">–</div>
+        <div class="label">less depth error with guides</div>
+      </div>
+      <p id="insightText">…</p>
+    </div>
+  </div>
+</section>
+
+<!-- ================= 01 PROBLEM ================= -->
+<section class="cream">
+  <div class="wrap narrow">
+    <div class="sec-head reveal"><span class="num">01</span><h2>The problem</h2></div>
+    <p class="reveal">On a flat screen, you can see left, right, up and down directly. <b>Near and far you have to guess</b>, from clues like size, perspective and shadows. People who grew up with 3D games read those clues without thinking. People who didn't, often can't.</p>
+    <p class="reveal">I've never been taught to draw, and I still taught myself to model a 3D character in Blender. I've also taught girls in Kano who had never touched a laptop. If XR and 3D tools ever reach people like them, they will meet this problem with no training at all, in tools designed by people who already think in 3D.</p>
+    <p class="reveal">So I built a tiny experiment to ask one question: <b>can a simple visual cue close that gap?</b> It builds on research showing that simple, non-intrusive visual guides help people draw more accurately in VR, whatever their spatial ability.</p>
+  </div>
+</section>
+
+<!-- ================= 02 QUESTION ================= -->
+<section>
+  <div class="wrap narrow">
+    <div class="sec-head reveal"><span class="num">02</span><h2>What I'm testing</h2></div>
+    <p class="reveal">Four hypotheses, each updated as new results arrive.</p>
+    <div id="hypList"></div>
+  </div>
+</section>
+
+<!-- ================= 03 DESIGN ================= -->
+<section class="cream">
+  <div class="wrap">
+    <div class="sec-head reveal"><span class="num">03</span><h2>Designing the experiment</h2></div>
+    <p class="reveal narrow">Every design decision had to answer two questions: is it fair, and can anyone take part?</p>
+    <div class="grid3">
+      <div class="card reveal"><h3>The task</h3><p>Move an orange cube to the exact spot of a teal ball in a furnished room, then press PLACE. Two rounds of five targets.</p><div class="why"><b>Why:</b> one simple action isolates depth judgement from everything else.</div></div>
+      <div class="card reveal"><h3>The guides</h3><p>A thin pole from each object to the floor, and a matching "shadow" disc underneath.</p><div class="why"><b>Why:</b> they turn a hard depth question into an easy floor-position question, without blocking the view.</div></div>
+      <div class="card reveal"><h3>No real shadows</h3><p>I switched off the scene's real-time lighting shadows.</p><div class="why"><b>Why:</b> shadows are themselves a depth cue. Leaving them on would quietly help the "no guides" round.</div></div>
+      <div class="card reveal"><h3>Fixed targets</h3><p>Every participant gets the same ten target positions.</p><div class="why"><b>Why:</b> differences come from the person and the condition, not luck.</div></div>
+      <div class="card reveal"><h3>Order by coin flip</h3><p>The game randomly decides whether guides come first or second.</p><div class="why"><b>Why:</b> people improve with practice, so a fixed order would favour the second round.</div></div>
+      <div class="card reveal"><h3>Error split three ways</h3><p>Each placement records error in depth, side and height separately, plus time and target distance.</p><div class="why"><b>Why:</b> a single "total error" would hide where people actually go wrong.</div></div>
+      <div class="card reveal"><h3>Phone-first</h3><p>A web build with on-screen buttons. No install: anyone with a link can take part.</p><div class="why"><b>Why:</b> the people I care about most are less likely to own a headset or a gaming PC.</div></div>
+      <div class="card reveal"><h3>Their own keyboard</h3><p>Name entry opens the phone's native keyboard through a small browser plugin.</p><div class="why"><b>Why:</b> Unity's built-in text box doesn't open phone keyboards in the browser.</div></div>
+      <div class="card reveal"><h3>How it felt</h3><p>Players report their 3D experience first, and which round felt easier at the end.</p><div class="why"><b>Why:</b> comparing feelings with numbers often reveals the most interesting design problems.</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= 04 ITERATIONS ================= -->
+<section class="dark">
+  <div class="wrap narrow">
+    <div class="sec-head reveal"><span class="num">04</span><h2>How it evolved</h2></div>
+    <div class="iter reveal"><div class="v">v1</div><div><h3>A bare prototype</h3><p>A cube, a sphere and a floor, with guides toggled by a key. It worked, but felt like an exercise with nobody in it.</p></div></div>
+    <div class="iter reveal"><div class="v">v2</div><div><h3>A real place</h3><p>A warm room with walls, a window and furniture, a small character who cheers good placements, and touch buttons so people could play on their phones.</p></div></div>
+    <div class="iter reveal"><div class="v">v3</div><div><h3>An actual experiment</h3><p>Fixed targets, counterbalanced order, per-axis error, experience and comfort questions, and a results screen participants can screenshot.</p></div></div>
+    <div class="iter reveal"><div class="v">Fix</div><div><h3>The pink screen</h3><p>On the first phone test, everything rendered bright pink: the web build had stripped the shader my objects needed. Linking a real material asset kept it in the build.</p></div></div>
+  </div>
+</section>
+
+<!-- ================= 05 METHOD ================= -->
+<section>
+  <div class="wrap narrow">
+    <div class="sec-head reveal"><span class="num">05</span><h2>Who took part</h2></div>
+    <div class="stats reveal" id="partStats"></div>
+    <p class="reveal">Participants open the link on their own phone, play both rounds (about five minutes) and send back a screenshot of their results with a short voice note on what made it hard. Names are replaced with IDs (P1, P2…) on this page.</p>
+  </div>
+</section>
+
+<!-- ================= 06 FINDINGS ================= -->
+<section class="cream">
+  <div class="wrap">
+    <div class="sec-head reveal"><span class="num">06</span><h2>What I found <span class="muted" style="font-size:.4em;letter-spacing:.06em">so far</span></h2></div>
+    <div class="grid2" style="margin-bottom:30px">
+      <div class="chart-card reveal">
+        <h3>Where errors happen</h3>
+        <div class="cap">Average error per placement, all participants</div>
+        <div id="barChart"></div>
+        <div class="legend"><span><i style="background:var(--grey)"></i>Guides OFF</span><span><i style="background:var(--orange)"></i>Guides ON</span></div>
+      </div>
+      <div class="chart-card reveal">
+        <h3>Depth error, person by person</h3>
+        <div class="cap">Each line is one participant, from guides OFF to guides ON</div>
+        <div id="slopeChart"></div>
+        <div class="legend"><span><i style="background:var(--orange)"></i>Has 3D experience</span><span><i style="background:#7C5CFF"></i>No 3D experience</span></div>
+      </div>
+    </div>
+
+    <div class="narrow">
+      <div class="finding reveal"><div class="n">1</div><div><h3>Depth is the hard direction</h3><p>Without guides, the experienced players were far more wrong about near and far than about left, right, up or down. On screen, the cube probably looked lined up with the ball while actually sitting metres in front of or behind it, and several of these placements took under five seconds.</p></div></div>
+      <div class="finding reveal"><div class="n">2</div><div><h3>The guides nearly erased it</h3><p>With guides on, depth error fell for every participant, in two cases by over 95%. Height error dropped less, which suggests the pole shows <i>where</i> an object is better than <i>how high</i> it is.</p></div></div>
+      <div class="finding reveal"><div class="n">3</div><div><h3>Nobody felt the difference</h3><p>Every participant so far said both rounds felt <b>about the same</b>, despite very different accuracy. Without guides, people don't know they're wrong. For design, that matters: if users can't feel an error, they won't ask for help.</p></div></div>
+      <div class="finding reveal"><div class="n">4</div><div><h3>A surprise about experience</h3><p>The one participant without 3D experience was the most accurate, even without guides, by moving slowly (about 34 seconds per target). The experienced players placed in seconds and were confidently wrong. Speed and confidence, not experience, may be the real story.</p></div></div>
+    </div>
+
+    <div class="narrow" id="quotesWrap" style="margin-top:30px"></div>
+  </div>
+</section>
+
+<!-- ================= 07 LIMITS ================= -->
+<section>
+  <div class="wrap narrow">
+    <div class="sec-head reveal"><span class="num">07</span><h2>Honest limits</h2></div>
+    <ul class="clean reveal">
+      <li><b>Tiny sample.</b> These are early trends from a handful of people, not proof.</li>
+      <li><b>Order effect.</b> So far, every participant happened to play without guides first, so practice may explain part of the improvement. Next, I'll alternate the order on purpose.</li>
+      <li><b>Different target sets.</b> Each round uses its own five targets, so target difficulty may differ slightly between conditions.</li>
+      <li><b>Different phones.</b> Screen size and touch accuracy vary between devices.</li>
+      <li><b>Informal pilot.</b> This is design research for learning, without formal ethics approval, so results won't be published as a study.</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ================= 08 NEXT ================= -->
+<section class="cream">
+  <div class="wrap narrow">
+    <div class="sec-head reveal"><span class="num">08</span><h2>What's next</h2></div>
+    <ul class="clean reveal">
+      <li><b>More first-timers.</b> Run it with Tech Sis Diaries girls and older adults, the people this question is really about.</li>
+      <li><b>Balanced order.</b> Alternate who starts with guides, so practice can't explain the results.</li>
+      <li><b>Show people their error.</b> Test whether instant feedback ("you were 2 m too close") changes how people judge depth, given that nobody felt the difference.</li>
+      <li><b>Compare cues.</b> Try a floor grid, a depth number and a soft glow against the pole and shadow.</li>
+      <li><b>Bring it into VR.</b> Run the same task in a headset, where stereo vision adds another depth cue.</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ================= JOIN ================= -->
+<section>
+  <div class="wrap">
+    <div class="join reveal">
+      <h2>Be part of it</h2>
+      <p>This is a living study. Anyone can take part, whatever their age, background or experience with 3D, and every new person makes the picture clearer. People with no 3D experience are especially welcome.</p>
+      <div class="steps"><span>1 · Open the game</span><span>2 · Play 2 short rounds</span><span>3 · Send me your results screen</span></div>
+      <a class="btn light" id="playBtn2" href="#">▶ Start the experiment</a>
+      <p style="font-size:.9rem;margin-top:18px;opacity:.9">Takes 30 to 60 seconds to load. Hold your phone sideways. Last updated <span id="updated"></span>.</p>
+    </div>
+  </div>
+</section>
+
+<footer>© 2026 Mmesoma Ugwuanyi · <a href="index.html">Back to portfolio</a></footer>
+
+<script>
+  const P = STUDY.participants;
+  const avg = (arr) => arr.length ? arr.reduce((a, b) => a + b, 0) / arr.length : 0;
+  const mean = (cond, key) => avg(P.map(p => p[cond][key]));
+  const $ = (id) => document.getElementById(id);
+
+  // Links
+  ["playBtn", "playBtn2"].forEach(id => $(id).href = STUDY.playLink);
+  $("codeBtn").href = STUDY.codeLink;
+  $("protoBtn").href = STUDY.protocolLink;
+  $("nCount").textContent = P.length;
+  $("updated").textContent = STUDY.lastUpdated;
+
+  // Video
+  if (STUDY.youtubeId && STUDY.youtubeId !== "YOUTUBE_VIDEO_ID") {
+    $("video").innerHTML = `<iframe src="https://www.youtube.com/embed/${STUDY.youtubeId}" title="Depth Guides demo" allowfullscreen></iframe>`;
+  }
+
+  // Headline insight
+  const offD = mean("off", "depth"), onD = mean("on", "depth");
+  const drop = offD > 0 ? Math.round((1 - onD / offD) * 100) : 0;
+  const sameCount = P.filter(p => p.easier === "same").length;
+  $("bigStat").textContent = "−" + drop + "%";
+  $("insightText").innerHTML = `Across ${P.length} participants, average depth error fell from <b>${offD.toFixed(2)}</b> to <b>${onD.toFixed(2)}</b> units with guides on. Yet ${sameCount} of ${P.length} said both rounds felt <b>about the same</b>.`;
+
+  // Hypotheses
+  $("hypList").innerHTML = STUDY.hypotheses.map(h => {
+    const cls = /support/i.test(h.status) ? "yes" : /early/i.test(h.status) ? "early" : "wait";
+    return `<div class="hyp reveal"><div class="code">${h.code}</div><div><p><b>${h.text}</b></p><p class="note">${h.note}</p></div><span class="chip ${cls}">${h.status}</span></div>`;
+  }).join("");
+
+  // Participant stats
+  const beginners = P.filter(p => p.experience === "no").length;
+  const devices = [...new Set(P.map(p => p.device))].join(", ");
+  $("partStats").innerHTML = `
+    <div class="stat"><div class="v">${P.length}</div><div class="l">participants</div></div>
+    <div class="stat"><div class="v">${P.length * 10}</div><div class="l">placements recorded</div></div>
+    <div class="stat"><div class="v">${beginners}</div><div class="l">without 3D experience</div></div>
+    <div class="stat"><div class="v">${P.length - beginners}</div><div class="l">with 3D experience</div></div>`;
+  document.querySelector("#partStats").insertAdjacentHTML("afterend", `<p class="reveal muted">Devices so far: ${devices}.</p>`);
+
+  // Quotes
+  if (STUDY.quotes.length) {
+    $("quotesWrap").innerHTML = `<h3 style="margin-bottom:14px">In their words</h3>` +
+      STUDY.quotes.map(q => `<blockquote class="reveal" style="margin-bottom:12px">"${q.text}"<cite>${q.id}</cite></blockquote>`).join("");
+  }
+
+  // Bar chart: depth / side / height, OFF vs ON
+  (function () {
+    const keys = [["depth", "Depth"], ["side", "Side"], ["height", "Height"]];
+    const W = 460, H = 260, pad = 40, maxV = Math.max(...keys.flatMap(([k]) => [mean("off", k), mean("on", k)]), 0.1) * 1.15;
+    const gw = (W - pad * 2) / keys.length, bw = gw * 0.3;
+    let s = `<svg viewBox="0 0 ${W} ${H}" width="100%">`;
+    s += `<line x1="${pad}" y1="${H - pad}" x2="${W - 10}" y2="${H - pad}" stroke="#ddd"/>`;
+    keys.forEach(([k, label], i) => {
+      const x = pad + i * gw + gw / 2;
+      [["off", "#A3A3AD", -bw - 3], ["on", "#FF6B1A", 3]].forEach(([c, col, dx]) => {
+        const v = mean(c, k), h = (v / maxV) * (H - pad * 2);
+        s += `<rect x="${x + dx}" y="${H - pad - h}" width="${bw}" height="${h}" rx="5" fill="${col}"/>`;
+        s += `<text x="${x + dx + bw / 2}" y="${H - pad - h - 6}" text-anchor="middle" font-size="12" fill="#5F5F68">${v.toFixed(2)}</text>`;
+      });
+      s += `<text x="${x}" y="${H - pad + 20}" text-anchor="middle" font-size="13" font-weight="700" fill="#17171A">${label}</text>`;
+    });
+    $("barChart").innerHTML = s + `</svg>`;
+  })();
+
+  // Slope chart: each participant's depth error OFF → ON
+  (function () {
+    const W = 460, H = 260, top = 24, bottom = 36, x1 = 110, x2 = 350;
+    const maxV = Math.max(...P.map(p => p.off.depth), ...P.map(p => p.on.depth), 0.1) * 1.1;
+    const y = v => top + (1 - v / maxV) * (H - top - bottom);
+    let s = `<svg viewBox="0 0 ${W} ${H}" width="100%">`;
+    s += `<line x1="${x1}" y1="${top}" x2="${x1}" y2="${H - bottom}" stroke="#eee"/><line x1="${x2}" y1="${top}" x2="${x2}" y2="${H - bottom}" stroke="#eee"/>`;
+    s += `<text x="${x1}" y="${H - 12}" text-anchor="middle" font-size="13" font-weight="700">Guides OFF</text><text x="${x2}" y="${H - 12}" text-anchor="middle" font-size="13" font-weight="700">Guides ON</text>`;
+    // keep labels from overlapping when values are close
+    const spread = (vals) => { const o = vals.map((v, i) => ({ i, y: y(v) })).sort((a, b) => a.y - b.y);
+      for (let k = 1; k < o.length; k++) if (o[k].y - o[k - 1].y < 15) o[k].y = o[k - 1].y + 15;
+      const r = []; o.forEach(e => r[e.i] = e.y); return r; };
+    const offY = spread(P.map(p => p.off.depth)), onY = spread(P.map(p => p.on.depth));
+    if (Math.max(...onY) > H - bottom + 4) { const shift = Math.max(...onY) - (H - bottom + 4); for (let k = 0; k < onY.length; k++) onY[k] -= shift; }
+    P.forEach((p, idx) => {
+      const col = p.experience === "no" ? "#7C5CFF" : "#FF6B1A";
+      s += `<line x1="${x1}" y1="${y(p.off.depth)}" x2="${x2}" y2="${y(p.on.depth)}" stroke="${col}" stroke-width="3" opacity=".85"/>`;
+      s += `<circle cx="${x1}" cy="${y(p.off.depth)}" r="6" fill="${col}"/><circle cx="${x2}" cy="${y(p.on.depth)}" r="6" fill="${col}"/>`;
+      s += `<text x="${x1 - 12}" y="${offY[idx] + 4}" text-anchor="end" font-size="12" fill="#5F5F68">${p.id} ${p.off.depth.toFixed(2)}</text>`;
+      s += `<text x="${x2 + 12}" y="${onY[idx] + 4}" font-size="12" fill="#5F5F68">${p.id} ${p.on.depth.toFixed(2)}</text>`;
+    });
+    $("slopeChart").innerHTML = s + `</svg>`;
+  })();
+
+  // Fade-in on scroll
+  const io = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { e.target.classList.add("show"); io.unobserve(e.target); } }), { threshold: .12 });
+  document.querySelectorAll(".reveal").forEach(r => io.observe(r));
+</script>
+</body>
+</html>
