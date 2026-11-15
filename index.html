@@ -87,13 +87,14 @@
   @media (max-width: 900px) { .hero-actions { justify-content: center; } }
 
   .portrait-stage { position: relative; width: 380px; height: 440px; margin: 0 auto; }
-  .rings { position: absolute; inset: -30px; border-radius: 50%; z-index: 0;
+  .rings { position: absolute; left: 50%; top: 50%; width: 440px; height: 440px; border-radius: 50%; z-index: 0;
     background: repeating-radial-gradient(circle at center, transparent 0 14px, rgba(255,107,26,.28) 14px 16px);
     -webkit-mask: radial-gradient(circle, transparent 40%, #000 41%, #000 70%, transparent 71%);
             mask: radial-gradient(circle, transparent 40%, #000 41%, #000 70%, transparent 71%);
     animation: spinSlow 40s linear infinite; }
-  .arc { position: absolute; inset: 10px; border-radius: 50%; border: 3px dashed rgba(255,107,26,.5); animation: spinSlow 25s linear infinite reverse; }
-  @keyframes spinSlow { to { transform: rotate(360deg); } }
+  .arc { pposition: absolute; left: 50%; top: 50%; width: 370px; height: 370px; border-radius: 50%; border: 3px dashed rgba(255,107,26,.5); animation: spinSlow 25s linear infinite reverse; }
+  .rings, .arc { transform: translate(-50%, -50%); }
+  @keyframes spinSlow { from { transform: translate(-50%, -50%) rotate(0deg); } to { transform: translate(-50%, -50%) rotate(360deg); } }
   .portrait, .portrait-fallback {
     position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); z-index: 2;
     width: 280px; height: 360px; border-radius: 150px 150px 28px 28px; object-fit: cover;
@@ -104,8 +105,11 @@
     position: absolute; z-index: 3; background: #fff; border-radius: 16px; padding: 10px 14px; box-shadow: 0 14px 34px rgba(0,0,0,.1);
     font-weight: 700; font-size: .85rem; display: flex; align-items: center; gap: 8px; animation: bob 5s ease-in-out infinite;
   }
-  .badge.b1 { top: 40px; left: -20px; }
-  .badge.b2 { bottom: 50px; right: -24px; animation-delay: -2.5s; }
+  .rings { width: 330px; height: 330px; }
+    .arc { width: 280px; height: 280px; }
+    .badge { font-size: .78rem; padding: 8px 12px; }
+    .badge.b1 { left: 0; top: 24px; } .badge.b2 { right: 0; bottom: 36px; }
+    .cube-scene { right: 24px; }
   .badge .dot { width: 10px; height: 10px; border-radius: 50%; background: var(--orange); box-shadow: 0 0 0 4px var(--peach); }
   @keyframes bob { 50% { transform: translateY(-12px); } }
   .cube-scene { position: absolute; z-index: 3; width: 56px; height: 56px; perspective: 400px; top: -6px; right: 30px; }
