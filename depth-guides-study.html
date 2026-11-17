@@ -19,7 +19,7 @@
      ====================================================================== -->
 <script>
 const STUDY = {
-  lastUpdated: "15 November 2026",
+  lastUpdated: "17 November 2026",
   playLink: "https://mmeso-iconic.github.io/depth-guides/",
   codeLink: "https://github.com/Mmeso-iconic/depth-guides",
   protocolLink: "https://github.com/Mmeso-iconic/depth-guides/blob/main/docs/study-protocol.md",
@@ -32,19 +32,22 @@ const STUDY = {
       off: { depth: 3.56, side: 0.99, height: 0.56, time: 10.3 }, on: { depth: 0.13, side: 0.11, height: 0.37, time: 22.1 } },
     { id: "P3", experience: "yes", device: "iPhone", first: "OFF", easier: "same",
       off: { depth: 2.37, side: 0.41, height: 0.52, time: 13.9 }, on: { depth: 0.06, side: 0.04, height: 0.31, time: 22.3 } },
+    { id: "P4", experience: "yes", device: "Android phone", first: "OFF", easier: "with guides",
+      off: { depth: 1.05, side: 0.34, height: 0.21, time: 27.7 }, on: { depth: 0.04, side: 0.56, height: 0.13, time: 13.4 } },
   ],
 
   // What participants said (from voice notes). Leave the list empty to hide this section.
   quotes: [
-    // { id: "P2", text: "Type what they said here" },
+    { id: "P4", text: "The pole and the floor shadow really helped. I was able to easily identify the position of the ball in 3D." },
+    { id: "P4", text: "It did not specify at what axis. I first tried aligning them horizontally, then vertically, and later realised they had to be aligned on all three axes at the same time." },
   ],
 
   // Update the status of each hypothesis as data comes in
   hypotheses: [
     { code: "H1", text: "Depth (near/far) is harder to judge than side or height.", status: "Supported so far",
-      note: "Without guides, the two experienced players' depth errors were 3 to 6 times larger than their side or height errors." },
+      note: "Without guides, the three experienced players' depth errors were 3 to 6 times larger than their side or height errors." },
     { code: "H2", text: "Guides reduce depth error.", status: "Supported so far",
-      note: "Depth error dropped for all three participants with guides on." },
+      note: "Depth error dropped for all four participants with guides on." },
     { code: "H3", text: "Guides help people without 3D experience more.", status: "Too early to tell",
       note: "Only one participant without 3D experience so far, and they were already precise without guides. More first-timers needed." },
     { code: "H4", text: "Further targets are harder.", status: "Early signs",
@@ -304,9 +307,9 @@ const STUDY = {
 
     <div class="narrow">
       <div class="finding reveal"><div class="n">1</div><div><h3>Depth is the hard direction</h3><p>Without guides, the experienced players were far more wrong about near and far than about left, right, up or down. On screen, the cube probably looked lined up with the ball while actually sitting metres in front of or behind it, and several of these placements took under five seconds.</p></div></div>
-      <div class="finding reveal"><div class="n">2</div><div><h3>The guides nearly erased it</h3><p>With guides on, depth error fell for every participant, in two cases by over 95%. Height error dropped less, which suggests the pole shows <i>where</i> an object is better than <i>how high</i> it is.</p></div></div>
-      <div class="finding reveal"><div class="n">3</div><div><h3>Nobody felt the difference</h3><p>Every participant so far said both rounds felt <b>about the same</b>, despite very different accuracy. Without guides, people don't know they're wrong. For design, that matters: if users can't feel an error, they won't ask for help.</p></div></div>
-      <div class="finding reveal"><div class="n">4</div><div><h3>A surprise about experience</h3><p>The one participant without 3D experience was the most accurate, even without guides, by moving slowly (about 34 seconds per target). The experienced players placed in seconds and were confidently wrong. Speed and confidence, not experience, may be the real story.</p></div></div>
+      <div class="finding reveal"><div class="n">2</div><div><h3>The guides nearly erased it</h3><p>With guides on, depth error fell for every participant, in three cases by over 95%. Height error dropped less, which suggests the pole shows <i>where</i> an object is better than <i>how high</i> it is.</p></div></div>
+      <div class="finding reveal"><div class="n">3</div><div><h3>Nobody felt the difference</h3><p>Three of the four participants said both rounds felt <b>about the same</b>, despite very different accuracy. Without guides, people don't know they're wrong. For design, that matters: if users can't feel an error, they won't ask for help.</p></div></div>
+      <div class="finding reveal"><div class="n">4</div><div><h3>A surprise about experience</h3><p>The one participant without 3D experience was the most accurate, even without guides, by moving slowly (about 34 seconds per target). Two of the experienced players placed in seconds and were confidently wrong. Speed and confidence, not experience, may be the real story.</p></div></div>
     </div>
 
     <div class="narrow" id="quotesWrap" style="margin-top:30px"></div>
@@ -335,6 +338,7 @@ const STUDY = {
       <li><b>More first-timers.</b> Run it with Tech Sis Diaries girls and older adults, the people this question is really about.</li>
       <li><b>Balanced order.</b> Alternate who starts with guides, so practice can't explain the results.</li>
       <li><b>Show people their error.</b> Test whether instant feedback ("you were 2 m too close") changes how people judge depth, given that nobody felt the difference.</li>
+      <li><b>Clearer instructions.</b> One participant didn't realise the cube had to match the ball on all three axes at once. The next version will say so, with a quick practice target.</li>
       <li><b>Compare cues.</b> Try a floor grid, a depth number and a soft glow against the pole and shadow.</li>
       <li><b>Bring it into VR.</b> Run the same task in a headset, where stereo vision adds another depth cue.</li>
     </ul>
