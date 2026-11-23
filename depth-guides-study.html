@@ -19,7 +19,7 @@
      ====================================================================== -->
 <script>
 const STUDY = {
-  lastUpdated: "17 November 2026",
+  lastUpdated: "23 November 2026",
   playLink: "https://mmeso-iconic.github.io/depth-guides/",
   codeLink: "https://github.com/Mmeso-iconic/depth-guides",
   protocolLink: "https://github.com/Mmeso-iconic/depth-guides/blob/main/docs/study-protocol.md",
@@ -34,6 +34,10 @@ const STUDY = {
       off: { depth: 2.37, side: 0.41, height: 0.52, time: 13.9 }, on: { depth: 0.06, side: 0.04, height: 0.31, time: 22.3 } },
     { id: "P4", experience: "yes", device: "Android phone", first: "OFF", easier: "with guides",
       off: { depth: 1.05, side: 0.34, height: 0.21, time: 27.7 }, on: { depth: 0.04, side: 0.56, height: 0.13, time: 13.4 } },
+    { id: "P5", experience: "yes", device: "Android phone", first: "ON", easier: "same",
+      off: { depth: 0.78, side: 0.19, height: 0.19, time: 23.7 }, on: { depth: 0.04, side: 0.02, height: 0.54, time: 15.0 } },
+    { id: "P6", experience: "no",  device: "iOS (Safari)", first: "ON", easier: "same",
+      off: { depth: 0.11, side: 0.11, height: 0.04, time: 42.7 }, on: { depth: 0.12, side: 0.03, height: 0.06, time: 38.6 } },
   ],
 
   // What participants said (from voice notes). Leave the list empty to hide this section.
@@ -45,13 +49,13 @@ const STUDY = {
   // Update the status of each hypothesis as data comes in
   hypotheses: [
     { code: "H1", text: "Depth (near/far) is harder to judge than side or height.", status: "Supported so far",
-      note: "Without guides, the three experienced players' depth errors were 3 to 6 times larger than their side or height errors." },
+      note: "Without guides, all four experienced players' depth errors were 3 to 6 times larger than their side or height errors. For the two first-timers, depth was no harder than the other directions." },
     { code: "H2", text: "Guides reduce depth error.", status: "Supported so far",
-      note: "Depth error dropped for all four participants with guides on." },
-    { code: "H3", text: "Guides help people without 3D experience more.", status: "Too early to tell",
-      note: "Only one participant without 3D experience so far, and they were already precise without guides. More first-timers needed." },
-    { code: "H4", text: "Further targets are harder.", status: "Early signs",
-      note: "Without guides, depth error tended to grow with target distance for the two experienced players." },
+      note: "Depth error fell by about 95% or more for all four experienced players. P5 played with guides first, so practice alone cannot explain the drop. The two first-timers barely changed." },
+    { code: "H3", text: "Guides help people without 3D experience more.", status: "Early signs against",
+      note: "Both first-timers were already precise without guides, so the guides had little left to fix. The experienced players gained far more." },
+    { code: "H4", text: "Further targets are harder.", status: "Mixed",
+      note: "Depth error grew with distance for two experienced players, but P5's biggest misses were on the nearer targets." },
   ],
 };
 </script>
@@ -203,12 +207,12 @@ const STUDY = {
       <div><b>Role</b><span>Solo: research, design, development</span></div>
       <div><b>Timeline</b><span>November 2026, ongoing</span></div>
       <div><b>Tools</b><span>Unity 6, C#, WebGL, Python, GitHub Pages</span></div>
-      <div><b>Status</b><span class="live"><span id="nCount">0</span>&nbsp;participants · live pilot</span></div>
+      <div><b>Status</b><span class="live"><span id="nCount">6</span>&nbsp;participants · live pilot</span></div>
     </div>
     <div class="hero-actions">
-      <a class="btn" id="playBtn" href="#">▶ Take part (5 min)</a>
-      <a class="btn ghost" id="codeBtn" href="#">Code &amp; data</a>
-      <a class="btn ghost" id="protoBtn" href="#">Study protocol</a>
+      <a class="btn" id="playBtn" href="https://mmeso-iconic.github.io/depth-guides/?first=on">▶ Take part (5 min)</a>
+      <a class="btn ghost" id="codeBtn" href="https://github.com/Mmeso-iconic/depth-guides">Code &amp; data</a>
+      <a class="btn ghost" id="protoBtn" href="https://github.com/Mmeso-iconic/depth-guides/blob/main/docs/study-protocol.md">Study protocol</a>
     </div>
   </div>
 </header>
@@ -257,7 +261,7 @@ const STUDY = {
       <div class="card reveal"><h3>The guides</h3><p>A thin pole from each object to the floor, and a matching "shadow" disc underneath.</p><div class="why"><b>Why:</b> they turn a hard depth question into an easy floor-position question, without blocking the view.</div></div>
       <div class="card reveal"><h3>No real shadows</h3><p>I switched off the scene's real-time lighting shadows.</p><div class="why"><b>Why:</b> shadows are themselves a depth cue. Leaving them on would quietly help the "no guides" round.</div></div>
       <div class="card reveal"><h3>Fixed targets</h3><p>Every participant gets the same ten target positions.</p><div class="why"><b>Why:</b> differences come from the person and the condition, not luck.</div></div>
-      <div class="card reveal"><h3>Order by coin flip</h3><p>The game randomly decides whether guides come first or second.</p><div class="why"><b>Why:</b> people improve with practice, so a fixed order would favour the second round.</div></div>
+      <div class="card reveal"><h3>Balanced round order</h3><p>Each person gets one of two links, given out in turn: one starts with guides, the other without. Visitors who join from this page are given whichever order has been played less so far.</p><div class="why"><b>Why:</b> people improve with practice, so a fixed order would favour the second round.</div></div>
       <div class="card reveal"><h3>Error split three ways</h3><p>Each placement records error in depth, side and height separately, plus time and target distance.</p><div class="why"><b>Why:</b> a single "total error" would hide where people actually go wrong.</div></div>
       <div class="card reveal"><h3>Phone-first</h3><p>A web build with on-screen buttons. No install: anyone with a link can take part.</p><div class="why"><b>Why:</b> the people I care about most are less likely to own a headset or a gaming PC.</div></div>
       <div class="card reveal"><h3>Their own keyboard</h3><p>Name entry opens the phone's native keyboard through a small browser plugin.</p><div class="why"><b>Why:</b> Unity's built-in text box doesn't open phone keyboards in the browser.</div></div>
@@ -273,6 +277,7 @@ const STUDY = {
     <div class="iter reveal"><div class="v">v1</div><div><h3>A bare prototype</h3><p>A cube, a sphere and a floor, with guides toggled by a key. It worked, but felt like an exercise with nobody in it.</p></div></div>
     <div class="iter reveal"><div class="v">v2</div><div><h3>A real place</h3><p>A warm room with walls, a window and furniture, a small character who cheers good placements, and touch buttons so people could play on their phones.</p></div></div>
     <div class="iter reveal"><div class="v">v3</div><div><h3>An actual experiment</h3><p>Fixed targets, counterbalanced order, per-axis error, experience and comfort questions, and a results screen participants can screenshot.</p></div></div>
+    <div class="iter reveal"><div class="v">v4</div><div><h3>A coin that always landed the same way</h3><p>All four early participants played without guides first. That pointed to a pattern, not luck: on every fresh page load, the web build's random "coin flip" gave the same result. I now seed it from the clock, and the link itself sets the order, so who starts with guides is balanced by design.</p></div></div>
     <div class="iter reveal"><div class="v">Fix</div><div><h3>The pink screen</h3><p>On the first phone test, everything rendered bright pink: the web build had stripped the shader my objects needed. Linking a real material asset kept it in the build.</p></div></div>
   </div>
 </section>
@@ -307,9 +312,9 @@ const STUDY = {
 
     <div class="narrow">
       <div class="finding reveal"><div class="n">1</div><div><h3>Depth is the hard direction</h3><p>Without guides, the experienced players were far more wrong about near and far than about left, right, up or down. On screen, the cube probably looked lined up with the ball while actually sitting metres in front of or behind it, and several of these placements took under five seconds.</p></div></div>
-      <div class="finding reveal"><div class="n">2</div><div><h3>The guides nearly erased it</h3><p>With guides on, depth error fell for every participant, in three cases by over 95%. Height error dropped less, which suggests the pole shows <i>where</i> an object is better than <i>how high</i> it is.</p></div></div>
-      <div class="finding reveal"><div class="n">3</div><div><h3>Nobody felt the difference</h3><p>Three of the four participants said both rounds felt <b>about the same</b>, despite very different accuracy. Without guides, people don't know they're wrong. For design, that matters: if users can't feel an error, they won't ask for help.</p></div></div>
-      <div class="finding reveal"><div class="n">4</div><div><h3>A surprise about experience</h3><p>The one participant without 3D experience was the most accurate, even without guides, by moving slowly (about 34 seconds per target). Two of the experienced players placed in seconds and were confidently wrong. Speed and confidence, not experience, may be the real story.</p></div></div>
+      <div class="finding reveal"><div class="n">2</div><div><h3>The guides nearly erased it</h3><p>With guides on, depth error fell by about 95% or more for every experienced player, including P5, who played the guides round first, so practice alone cannot explain it. Height error did not always follow: for P5 it rose, which suggests the pole shows <i>where</i> an object is better than <i>how high</i> it is.</p></div></div>
+      <div class="finding reveal"><div class="n">3</div><div><h3>Nobody felt the difference</h3><p>Five of the six participants said both rounds felt <b>about the same</b>, despite very different accuracy. Without guides, people don't know they're wrong. For design, that matters: if users can't feel an error, they won't ask for help.</p></div></div>
+      <div class="finding reveal"><div class="n">4</div><div><h3>A surprise about experience</h3><p>Both participants without 3D experience were among the most accurate even without guides, and they were also the slowest (about 34 and 43 seconds per target). The experienced players placed faster and were confidently wrong. Care and speed, not experience, may be the real story, and the guides mattered most for people who moved quickly.</p></div></div>
     </div>
 
     <div class="narrow" id="quotesWrap" style="margin-top:30px"></div>
@@ -322,7 +327,7 @@ const STUDY = {
     <div class="sec-head reveal"><span class="num">07</span><h2>Honest limits</h2></div>
     <ul class="clean reveal">
       <li><b>Tiny sample.</b> These are early trends from a handful of people, not proof.</li>
-      <li><b>Order effect.</b> So far, every participant happened to play without guides first, so practice may explain part of the improvement. Next, I'll alternate the order on purpose.</li>
+      <li><b>Order effect.</b> P1 to P4 all played without guides first because of a bug in the random order (fixed in v4), so practice may explain part of their improvement. P5 and P6 started with guides through the new links, so the split is now four to two, and the next participants start with guides to even it out.</li>
       <li><b>Different target sets.</b> Each round uses its own five targets, so target difficulty may differ slightly between conditions.</li>
       <li><b>Different phones.</b> Screen size and touch accuracy vary between devices.</li>
       <li><b>Informal pilot.</b> This is design research for learning, without formal ethics approval, so results won't be published as a study.</li>
@@ -336,7 +341,7 @@ const STUDY = {
     <div class="sec-head reveal"><span class="num">08</span><h2>What's next</h2></div>
     <ul class="clean reveal">
       <li><b>More first-timers.</b> Run it with Tech Sis Diaries girls and older adults, the people this question is really about.</li>
-      <li><b>Balanced order.</b> Alternate who starts with guides, so practice can't explain the results.</li>
+      <li><b>Balanced order (now in place).</b> From P5 on, half start with guides and half without. Once both groups are big enough, I can check whether practice explains any of the difference.</li>
       <li><b>Show people their error.</b> Test whether instant feedback ("you were 2 m too close") changes how people judge depth, given that nobody felt the difference.</li>
       <li><b>Clearer instructions.</b> One participant didn't realise the cube had to match the ball on all three axes at once. The next version will say so, with a quick practice target.</li>
       <li><b>Compare cues.</b> Try a floor grid, a depth number and a soft glow against the pole and shadow.</li>
@@ -352,7 +357,7 @@ const STUDY = {
       <h2>Be part of it</h2>
       <p>This is a living study. Anyone can take part, whatever their age, background or experience with 3D, and every new person makes the picture clearer. People with no 3D experience are especially welcome.</p>
       <div class="steps"><span>1 · Open the game</span><span>2 · Play 2 short rounds</span><span>3 · Send me your results screen</span></div>
-      <a class="btn light" id="playBtn2" href="#">▶ Start the experiment</a>
+      <a class="btn light" id="playBtn2" href="https://mmeso-iconic.github.io/depth-guides/?first=on">▶ Start the experiment</a>
       <p style="font-size:.9rem;margin-top:18px;opacity:.9">Takes 30 to 60 seconds to load. Hold your phone sideways. Last updated <span id="updated"></span>.</p>
     </div>
   </div>
@@ -367,7 +372,11 @@ const STUDY = {
   const $ = (id) => document.getElementById(id);
 
   // Links
-  ["playBtn", "playBtn2"].forEach(id => $(id).href = STUDY.playLink);
+  // Give each visitor the round order that has been played less so far (a coin flip when tied)
+  const nOn = STUDY.participants.filter(p => p.first === "ON").length;
+  const nOff = STUDY.participants.length - nOn;
+  const firstParam = nOn < nOff ? "?first=on" : nOff < nOn ? "?first=off" : (Math.random() < 0.5 ? "?first=on" : "?first=off");
+  ["playBtn", "playBtn2"].forEach(id => $(id).href = STUDY.playLink + firstParam);
   $("codeBtn").href = STUDY.codeLink;
   $("protoBtn").href = STUDY.protocolLink;
   $("nCount").textContent = P.length;
@@ -439,7 +448,7 @@ const STUDY = {
       for (let k = 1; k < o.length; k++) if (o[k].y - o[k - 1].y < 15) o[k].y = o[k - 1].y + 15;
       const r = []; o.forEach(e => r[e.i] = e.y); return r; };
     const offY = spread(P.map(p => p.off.depth)), onY = spread(P.map(p => p.on.depth));
-    if (Math.max(...onY) > H - bottom + 4) { const shift = Math.max(...onY) - (H - bottom + 4); for (let k = 0; k < onY.length; k++) onY[k] -= shift; }
+    [offY, onY].forEach(arr => { if (Math.max(...arr) > H - bottom + 4) { const shift = Math.max(...arr) - (H - bottom + 4); for (let k = 0; k < arr.length; k++) arr[k] -= shift; } });
     P.forEach((p, idx) => {
       const col = p.experience === "no" ? "#7C5CFF" : "#FF6B1A";
       s += `<line x1="${x1}" y1="${y(p.off.depth)}" x2="${x2}" y2="${y(p.on.depth)}" stroke="${col}" stroke-width="3" opacity=".85"/>`;
